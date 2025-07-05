@@ -17,9 +17,6 @@ export async function createClient() {
             cookieStore.set({ name, value, ...options });
           } catch (error) {
             console.error("Failed to set cookie:", error);
-            // The `set` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
           }
         },
         remove(name: string, options: CookieOptions) {
@@ -27,9 +24,6 @@ export async function createClient() {
             cookieStore.set({ name, value: "", ...options });
           } catch (error) {
             console.error("Failed to remove cookie:", error);
-            // The `delete` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
           }
         },
       },
