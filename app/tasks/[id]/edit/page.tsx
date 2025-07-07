@@ -1,6 +1,8 @@
 import TaskForm from "@/components/tasks/task-form";
 import { dummyTasks } from "@/lib/dummy-data";
 
+export const dynamic = "force-dynamic";
+
 // 非同期でタスクを取得する関数（Promiseを返す）
 async function getTaskById(id: string) {
   // 同期処理をPromiseでラップして非同期の挙動を模倣する
