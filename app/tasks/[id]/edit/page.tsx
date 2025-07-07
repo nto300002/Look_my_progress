@@ -12,10 +12,10 @@ async function getTaskById(id: string) {
 export default async function EditTaskPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  // await を使って非同期に関数を呼び出し、結果を待つ
-  const task = await getTaskById(params.id);
+  const { id } = await params;
+  const task = await getTaskById(id);
 
   if (!task) {
     return <div>タスクが見つかりません</div>;
