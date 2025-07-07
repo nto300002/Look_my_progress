@@ -17,9 +17,10 @@ const priorityMap: {
 export default async function TaskDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const task = dummyTasks.find((task) => task.id === params.id);
+  const { id } = await params;
+  const task = dummyTasks.find((task) => task.id === id);
 
   if (!task) {
     return <div>タスクが見つかりません</div>;
