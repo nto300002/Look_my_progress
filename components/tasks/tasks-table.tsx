@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { dummyTasks } from "@/lib/dummy-data";
 import { Task } from "@/lib/definitions";
 import {
   Table,
@@ -31,8 +30,8 @@ const priorityMap: {
   低: { label: "低", className: "bg-green-500" },
 };
 
-export default function TasksTable() {
-  const [tasks, setTasks] = useState<Task[]>(dummyTasks);
+export default function TasksTable({ tasks: initialTasks }: { tasks: Task[] }) {
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
   const handleStatusChange = (
     taskId: string,
