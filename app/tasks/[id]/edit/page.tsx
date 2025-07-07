@@ -1,11 +1,7 @@
 import TaskForm from "@/components/tasks/task-form";
 import { dummyTasks } from "@/lib/dummy-data";
 
-export default async function EditTaskPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function EditTaskPage({ params }: any) {
   // ダミーデータからIDに一致するタスクを取得
   const task = dummyTasks.find((task) => task.id === params.id);
 
