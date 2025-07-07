@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 // 非同期でタスクを取得する関数（Promiseを返す）
 async function getTaskById(id: string) {
   // 同期処理をPromiseでラップして非同期の挙動を模倣する
-  return Promise.resolve(dummyTasks.find((task) => task.id === id));
+  return dummyTasks.find((task) => task.id === id);
 }
 
 export default async function EditTaskPage({
