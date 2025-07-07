@@ -5,6 +5,16 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Menu, LogOut } from "lucide-react";
 
 // shadcn/uiのButtonが利用可能であると仮定
 // import { Button } from '@/components/ui/button'
@@ -41,43 +51,79 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-gray-100 dark:bg-gray-900 border-b">
+    <header className="bg-white dark:bg-gray-900 border-b">
       <div className="container mx-auto flex justify-between items-center p-4">
         <Link
           href="/"
-          className="text-2xl font-bold text-gray-800 dark:text-white"
+          className="text-xl font-bold text-gray-800 dark:text-white"
         >
-          Progress
+          ゆるく進捗管理
         </Link>
-        <nav>
+        <nav className="flex items-center gap-4">
           {user ? (
-            <div className="flex items-center gap-4">
-              <span className="text-gray-700 dark:text-gray-300">
-                {user.email}
-              </span>
-              <Link href="/daily_reports">
-                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors">
-                  Dashboard
-                </button>
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition-colors"
-              >
-                Logout
-              </button>
-            </div>
+            <>
+              {/* PC用ナビゲーション */}
+              <div className="hidden md:flex items-center gap-2">
+                <Link href="/daily_reports" passHref>
+                  <Button variant="ghost">日報一覧</Button>
+                </Link>
+                <Link href="/tasks" passHref>
+                  <Button variant="ghost">タスク一覧</Button>
+                </Link>
+                <Link href="/tasks/schedule" passHref>
+                  <Button variant="ghost">スケジュール</Button>
+                </Link>
+                <Button onClick={handleLogout} variant="ghost">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  ログアウト
+                </Button>
+              </div>
+              {/* モバイル用ハンバーガーメニュー */}
+              <div className="md:hidden">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="icon">
+                      <Menu className="h-5 w-5" />
+                      <span className="sr-only">メニューを開く</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href="/daily-reports/today">今日の様子</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/tasks/today">今日のタスク</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/schedule">スケジュール</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/tasks">タスク一覧</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/retrospectives">振り返り</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={handleLogout}
+                      className="text-red-500"
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>ログアウト</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </>
           ) : (
             <div className="flex items-center gap-4">
-              <Link href="/auth/login">
-                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors">
-                  Login
-                </button>
+              <Link href="/auth/sign-up" passHref>
+                <Button variant="ghost">新規登録</Button>
               </Link>
-              <Link href="/auth/sign-up">
-                <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition-colors">
-                  Sign Up
-                </button>
+              <Link href="/auth/login" passHref>
+                <Button variant="ghost">ログイン</Button>
               </Link>
             </div>
           )}
