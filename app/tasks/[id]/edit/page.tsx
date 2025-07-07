@@ -3,7 +3,7 @@ import { dummyTasks } from "@/lib/dummy-data";
 
 type PageProps = {
   params: { id: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 
 // 非同期でタスクを取得する関数（Promiseを返す）
@@ -12,7 +12,10 @@ async function getTaskById(id: string) {
   return Promise.resolve(dummyTasks.find((task) => task.id === id));
 }
 
-export default async function EditTaskPage({ params }: PageProps) {
+export default async function EditTaskPage({
+  params,
+  searchParams,
+}: PageProps) {
   // await を使って非同期に関数を呼び出し、結果を待つ
   const task = await getTaskById(params.id);
 
