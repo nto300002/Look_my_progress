@@ -1,11 +1,6 @@
 import TaskForm from "@/components/tasks/task-form";
 import { dummyTasks } from "@/lib/dummy-data";
 
-type PageProps = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
 // 非同期でタスクを取得する関数（Promiseを返す）
 async function getTaskById(id: string) {
   // 同期処理をPromiseでラップして非同期の挙動を模倣する
@@ -14,11 +9,10 @@ async function getTaskById(id: string) {
 
 export default async function EditTaskPage({
   params,
-  searchParams,
-}: PageProps) {
+}: {
+  params: { id: string };
+}) {
   // await を使って非同期に関数を呼び出し、結果を待つ
-  console.log("params", params);
-  console.log("searchParams", searchParams);
   const task = await getTaskById(params.id);
 
   if (!task) {
