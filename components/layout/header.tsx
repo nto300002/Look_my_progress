@@ -15,9 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Menu, LogOut } from "lucide-react";
-
-// shadcn/uiのButtonが利用可能であると仮定
-// import { Button } from '@/components/ui/button'
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export default function Header() {
   const [user, setUser] = useState<User | null>(null);
@@ -57,26 +55,27 @@ export default function Header() {
           href="/"
           className="text-xl font-bold text-gray-800 dark:text-white"
         >
-          ゆるく進捗管理
+          Look! My progress
         </Link>
         <nav className="flex items-center gap-4">
           {user ? (
             <>
               {/* PC用ナビゲーション */}
               <div className="hidden md:flex items-center gap-2">
-                <Link href="/daily_reports" passHref>
-                  <Button variant="ghost">日報一覧</Button>
+                <Link href={`/users/${user.id}/daily_reports`} passHref>
+                  <Button variant="ghost">My日報一覧</Button>
                 </Link>
-                <Link href="/tasks" passHref>
-                  <Button variant="ghost">タスク一覧</Button>
+                <Link href={`/users/${user.id}/tasks`} passHref>
+                  <Button variant="ghost">Myタスク一覧</Button>
                 </Link>
-                <Link href="/tasks/schedule" passHref>
-                  <Button variant="ghost">スケジュール</Button>
+                <Link href={`/users/${user.id}/schedule`} passHref>
+                  <Button variant="ghost">Myスケジュール</Button>
                 </Link>
                 <Button onClick={handleLogout} variant="ghost">
                   <LogOut className="mr-2 h-4 w-4" />
                   ログアウト
                 </Button>
+                <ThemeSwitcher />
               </div>
               {/* モバイル用ハンバーガーメニュー */}
               <div className="md:hidden">
@@ -91,19 +90,22 @@ export default function Header() {
                     <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
-                      <Link href="/daily-reports/today">今日の様子</Link>
+                      <Link href={`/users/${user.id}/daily_reports`}>
+                        日報一覧
+                      </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/tasks/today">今日のタスク</Link>
+                      <Link href={`/users/${user.id}/tasks`}>タスク一覧</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/schedule">スケジュール</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/tasks">タスク一覧</Link>
+                      <Link href="/users/schedule">スケジュール</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link href="/retrospectives">振り返り</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <ThemeSwitcher />
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
