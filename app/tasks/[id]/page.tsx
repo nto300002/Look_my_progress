@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { dummyTasks } from "@/lib/dummy-data";
-import type { Task } from "@/lib/definitions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
@@ -67,19 +66,19 @@ export default async function TaskDetailPage({
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
-            h1: ({ node, ...props }) => (
+            h1: ({ ...props }) => (
               <h1
                 className="text-3xl font-bold underline mt-4 mb-4"
                 {...props}
               />
             ),
-            h2: ({ node, ...props }) => (
+            h2: ({ ...props }) => (
               <h2 className="text-2xl font-semibold mt-3 mb-3" {...props} />
             ),
-            h3: ({ node, ...props }) => (
+            h3: ({ ...props }) => (
               <h3 className="text-xl font-semibold mt-3 mb-3" {...props} />
             ),
-            h4: ({ node, ...props }) => (
+            h4: ({ ...props }) => (
               <h4 className="text-lg font-semibold mt-3 mb-3" {...props} />
             ),
           }}
