@@ -68,3 +68,13 @@ export const dummyTasks: Task[] = [
     description: "Figmaで主要画面のワイヤーフレームを作成する。",
   },
 ];
+
+export const getAllTasks = async (): Promise<Task[]> => {
+  // In a real application, you would fetch this data from a database.
+  // For now, we're returning the dummy data.
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(dummyTasks);
+    }, 500); // Simulate network latency
+  });
+};
