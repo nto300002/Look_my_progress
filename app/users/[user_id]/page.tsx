@@ -4,12 +4,6 @@ import { notFound } from "next/navigation";
 import { Book, Calendar, ListChecks } from "lucide-react";
 import { UpdateRoleForm } from "@/components/users/update-role-form";
 
-type Props = {
-  params: {
-    user_id: string;
-  };
-};
-
 export default async function UserDetailPage({
   params,
 }: {
