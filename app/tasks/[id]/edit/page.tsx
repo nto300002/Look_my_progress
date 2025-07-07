@@ -17,6 +17,8 @@ export default async function EditTaskPage({
   searchParams,
 }: PageProps) {
   // await を使って非同期に関数を呼び出し、結果を待つ
+  console.log("params", params);
+  console.log("searchParams", searchParams);
   const task = await getTaskById(params.id);
 
   if (!task) {
