@@ -54,7 +54,7 @@ export default function TaskForm({ task }: TaskFormProps) {
         <Label htmlFor="description">詳細</Label>
         <Textarea
           id="description"
-          defaultValue={task?.description}
+          defaultValue={task?.description ?? ""}
           placeholder="タスクの詳細をMarkdown形式で記述..."
           rows={10}
         />
