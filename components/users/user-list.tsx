@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
+import { Profile } from "@/lib/definitions";
 
 export default async function UserList() {
   const supabase = await createClient();
@@ -29,7 +30,7 @@ export default async function UserList() {
     <div className="container mx-auto py-10">
       <h1 className="text-3xl font-bold mb-6">Users</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {profiles.map((profile: any) => (
+        {profiles.map((profile: Profile) => (
           <Link
             href={`/users/${profile.id}`}
             key={profile.id}
