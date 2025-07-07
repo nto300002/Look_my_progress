@@ -9,3 +9,5 @@ export type Task = {
   createdAt: string;
   description: string;
 };
+
+export type UserRole = "task_manager" | "commenter";
