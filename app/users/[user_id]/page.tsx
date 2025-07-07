@@ -10,7 +10,11 @@ type Props = {
   };
 };
 
-export default async function UserDetailPage({ params }: Props) {
+export default async function UserDetailPage({
+  params,
+}: {
+  params: Promise<{ user_id: string }>;
+}) {
   const { user_id } = await params;
   const supabase = await createClient();
 
