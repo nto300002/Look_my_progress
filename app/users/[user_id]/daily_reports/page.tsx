@@ -5,11 +5,12 @@ import { Suspense } from "react";
 export default async function DailyReportsPage({
   params,
 }: {
-  params: { user_id: string };
+  params: Promise<{ user_id: string }>;
 }) {
+  const { user_id } = await params;
   return (
     <Suspense fallback={<Loading />}>
-      <ReportContent userId={params.user_id} />
+      <ReportContent userId={user_id} />
     </Suspense>
   );
 }
