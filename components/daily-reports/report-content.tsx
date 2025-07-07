@@ -31,7 +31,7 @@ export async function ReportContent({ userId }: { userId: string }) {
   const supabase = await createClient();
 
   // Fetch daily reports using the dummy data function
-  const dailyReports = await getDailyReportsByUserId(userId);
+  const dailyReports: DailyReport[] = await getDailyReportsByUserId(userId);
 
   const { data: profile } = await supabase
     .from("profiles")
