@@ -1,30 +1,20 @@
+import { getAllTasks } from "@/lib/dummy-data";
+import TasksTable from "@/components/tasks/tasks-table";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import TasksTable from "@/components/tasks/tasks-table";
-import { PlusCircle } from "lucide-react";
 
-export default function TasksPage() {
+export default async function TasksPage() {
+  const tasks = await getAllTasks();
+
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">タスク一覧</h1>
-        <p className="text-muted-foreground">チームのタスクを管理します。</p>
+    <div className="container mx-auto p-4">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">Tasks</h1>
+        <Button asChild>
+          <Link href="/users/default-user/tasks/new">New Task</Link>
+        </Button>
       </div>
-
-      <div className="flex justify-between items-center">
-        <div className="w-1/3">
-          <Input placeholder="タスクを検索..." />
-        </div>
-        <Link href="/tasks/new">
-          <Button>
-            <PlusCircle className="mr-2 h-4 w-4" />
-            新規作成
-          </Button>
-        </Link>
-      </div>
-
-      <TasksTable />
+      <TasksTable tasks={tasks} />
     </div>
   );
 }

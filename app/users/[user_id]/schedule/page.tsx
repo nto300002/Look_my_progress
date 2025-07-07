@@ -1,0 +1,29 @@
+"use client";
+
+import { dummyTasks } from "@/lib/dummy-data";
+import Calendar from "@/components/tasks/schedule/calendar";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+
+export default function SchedulePage() {
+  const router = useRouter();
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-4">
+        <Button variant="outline" size="icon" onClick={() => router.back()}>
+          <ArrowLeft className="h-4 w-4" />
+        </Button>
+        <div>
+          <h1 className="text-2xl font-bold">スケジュール</h1>
+          <p className="text-muted-foreground">
+            タスクの期限をカレンダーで確認します。
+          </p>
+        </div>
+      </div>
+
+      <Calendar tasks={dummyTasks} />
+    </div>
+  );
+}
