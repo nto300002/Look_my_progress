@@ -1,50 +1,37 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getTasks } from "@/lib/dummy-data";
-import { Task } from "@/lib/definitions";
-import Calendar from "@/components/tasks/schedule/calendar";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import Calendar from "@/components/tasks/schedule/calendar";
+import { Task } from "@/lib/definitions";
 
-export default async function SchedulePage({
-  params,
-}: {
-  params: Promise<{ user_id: string }>;
-}) {
-  const { user_id } = await params;
+export default function SchedulePage() {
+  const params = useParams();
+  const userId = params.user_id as string;
   const router = useRouter();
   const [tasks, setTasks] = useState<Task[]>([]);
-  console.log(user_id);
+  console.log(setTasks);
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const fetchedTasks = await getTasks();
-        setTasks(fetchedTasks);
-      } catch (error) {
-        console.error("Failed to fetch tasks:", error);
-      }
-    };
-
-    fetchTasks();
-  }, []);
+    // TODO: fetch tasks for this user
+    // e.g., fetchTasksByUserId(userId).then(setTasks);
+  }, [userId]);
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-4">
+    <div className="container mx-auto py-10">
+      <div className="flex items-center gap-4 mb-6">
         <Button variant="outline" size="icon" onClick={() => router.back()}>
           <ArrowLeft className="h-4 w-4" />
         </Button>
         <div>
-          <h1 className="text-2xl font-bold">スケジュール</h1>
-          <p className="text-muted-foreground">
-            タスクの期限をカレンダーで確認します。
+          <p className="text-sm text-muted-foreground">
+            {userId}のスケジュール
           </p>
+          <h1 className="text-3xl font-bold">Schedule</h1>
         </div>
       </div>
-
       <Calendar tasks={tasks} />
     </div>
   );

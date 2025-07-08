@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { createClient } from "@/lib/supabase/server";
-import { notFound } from "next/navigation";
 import { ReportForm } from "@/components/daily-reports/report-form";
 
 export default async function Page({
