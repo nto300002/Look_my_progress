@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { dummyTasks } from "@/lib/dummy-data";
+import { getTasks } from "@/lib/dummy-data";
+import { notFound } from "next/navigation";
+import { Task } from "@/lib/definitions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
@@ -17,13 +19,14 @@ const priorityMap: {
 export default async function TaskDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
-  const task = dummyTasks.find((task) => task.id === id);
+  const { id } = params;
+  const tasks = await getTasks();
+  const task = tasks.find((task) => task.id === id);
 
   if (!task) {
-    return <div>タスクが見つかりません</div>;
+    notFound();
   }
 
   return (

@@ -22,7 +22,14 @@ export async function PATCH(
   const { title, mood, achievements, challenges, learnings, report_date } =
     body;
 
-  const reportDataToUpdate: { [key: string]: any } = {};
+  const reportDataToUpdate: Partial<{
+    title: string;
+    face: "smile" | "normal" | "sad";
+    good_thing: string;
+    bad_thing: string;
+    message: string;
+    report_date: string;
+  }> = {};
   if (title !== undefined) reportDataToUpdate.title = title;
   if (mood !== undefined) reportDataToUpdate.face = mood;
   if (achievements !== undefined) reportDataToUpdate.good_thing = achievements;

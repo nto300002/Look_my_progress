@@ -1,12 +1,14 @@
+// import { dummyTasks } from "@/lib/dummy-data";
+import { Task } from "@/lib/definitions";
 import TaskForm from "@/components/tasks/task-form";
-import { dummyTasks } from "@/lib/dummy-data";
 
 export const dynamic = "force-dynamic";
 
 // 非同期でタスクを取得する関数（Promiseを返す）
-async function getTaskById(id: string) {
-  // 同期処理をPromiseでラップして非同期の挙動を模倣する
-  return Promise.resolve(dummyTasks.find((task) => task.id === id));
+async function getTaskById(id: string): Promise<Task | undefined> {
+  // TODO: Implement actual data fetching from your database
+  // return Promise.resolve(dummyTasks.find((task) => task.id === id));
+  return Promise.resolve(undefined);
 }
 
 export default async function EditTaskPage({
