@@ -1,26 +1,19 @@
-// import { dummyTasks } from "@/lib/dummy-data";
+import { getTasks } from "@/lib/dummy-data";
 import { Task } from "@/lib/definitions";
 import TaskForm from "@/components/tasks/task-form";
-
-export const dynamic = "force-dynamic";
-
-// 非同期でタスクを取得する関数（Promiseを返す）
-async function getTaskById(id: string): Promise<Task | undefined> {
-  // TODO: Implement actual data fetching from your database
-  // return Promise.resolve(dummyTasks.find((task) => task.id === id));
-  return Promise.resolve(undefined);
-}
+import { notFound } from "next/navigation";
 
 export default async function EditTaskPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
-  const task = await getTaskById(id);
+  const { id } = params;
+  const tasks = await getTasks();
+  const task = tasks.find((task) => task.id === id);
 
   if (!task) {
-    return <div>タスクが見つかりません</div>;
+    notFound();
   }
 
   return (
