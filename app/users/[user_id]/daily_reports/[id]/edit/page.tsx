@@ -1,48 +1,22 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import { notFound } from "next/navigation";
 import { ReportForm } from "@/components/daily-reports/report-form";
 import { getDailyReportById } from "@/lib/data/daily-reports";
-import { createClient } from "@/lib/supabase/server";
+import { notFound } from "next/navigation";
 
-export default async function EditDailyReportPage({
+export default async function Page({
   params,
 }: {
-  params: { user_id: string; id: string };
+  params: Promise<{ user_id: string; id: string }>;
 }) {
-  const { user_id, id } = params;
-
-  const [report, supabase] = await Promise.all([
-    getDailyReportById(id),
-    createClient(),
-  ]);
+  const { id } = await params;
+  const report = await getDailyReportById(id);
 
   if (!report) {
     notFound();
   }
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("name")
-    .eq("id", user_id)
-    .single();
-
   return (
     <div className="container mx-auto py-10">
-      <div className="flex items-center gap-4 mb-6">
-        <Link href={`/users/${user_id}/daily_reports`}>
-          <Button variant="outline" size="icon">
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-        </Link>
-        <div>
-          <p className="text-sm text-muted-foreground">
-            {profile?.name ?? "ユーザー"} の日報を編集
-          </p>
-          <h1 className="text-3xl font-bold">Edit Daily Report</h1>
-        </div>
-      </div>
+      <h1 className="text-3xl font-bold mb-6">日報を編集</h1>
       <ReportForm initialData={report} />
     </div>
   );

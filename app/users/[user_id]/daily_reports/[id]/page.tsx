@@ -23,9 +23,9 @@ const moodMap: { [key: string]: { label: string; className: string } } = {
 export default async function DailyReportDetailPage({
   params,
 }: {
-  params: { user_id: string; id: string };
+  params: Promise<{ user_id: string; id: string }>;
 }) {
-  const { user_id, id } = params;
+  const { user_id, id } = await params;
   const report = await getDailyReportById(id);
 
   if (!report) {

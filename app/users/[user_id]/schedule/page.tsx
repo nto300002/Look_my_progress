@@ -8,9 +8,15 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
-export default function SchedulePage() {
+export default async function SchedulePage({
+  params,
+}: {
+  params: Promise<{ user_id: string }>;
+}) {
+  const { user_id } = await params;
   const router = useRouter();
   const [tasks, setTasks] = useState<Task[]>([]);
+  console.log(user_id);
 
   useEffect(() => {
     const fetchTasks = async () => {
