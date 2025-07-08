@@ -1,6 +1,8 @@
 "use client";
 
-import { dummyTasks } from "@/lib/dummy-data";
+import { useEffect, useState } from "react";
+import { getTasks } from "@/lib/dummy-data";
+import { Task } from "@/lib/definitions";
 import Calendar from "@/components/tasks/schedule/calendar";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -8,6 +10,20 @@ import { ArrowLeft } from "lucide-react";
 
 export default function SchedulePage() {
   const router = useRouter();
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const fetchedTasks = await getTasks();
+        setTasks(fetchedTasks);
+      } catch (error) {
+        console.error("Failed to fetch tasks:", error);
+      }
+    };
+
+    fetchTasks();
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -23,7 +39,7 @@ export default function SchedulePage() {
         </div>
       </div>
 
-      <Calendar tasks={dummyTasks} />
+      <Calendar tasks={tasks} />
     </div>
   );
 }
