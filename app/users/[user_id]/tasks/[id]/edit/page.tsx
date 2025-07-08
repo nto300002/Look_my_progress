@@ -1,5 +1,4 @@
 import { getTasks } from "@/lib/dummy-data";
-import { Task } from "@/lib/definitions";
 import TaskForm from "@/components/tasks/task-form";
 import { notFound } from "next/navigation";
 

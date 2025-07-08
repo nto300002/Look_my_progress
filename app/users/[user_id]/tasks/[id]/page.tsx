@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { getTasks } from "@/lib/dummy-data";
 import { notFound } from "next/navigation";
-import { Task } from "@/lib/definitions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
