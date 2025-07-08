@@ -5,9 +5,9 @@ import { notFound } from "next/navigation";
 export default async function EditTaskPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params;
   const tasks = await getTasks();
   const task = tasks.find((task) => task.id === id);
 

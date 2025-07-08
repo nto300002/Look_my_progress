@@ -18,9 +18,9 @@ const priorityMap: {
 export default async function TaskDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params;
   const tasks = await getTasks();
   const task = tasks.find((task) => task.id === id);
 
