@@ -3,10 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ userId: string; id: string }> }
 ) {
   const supabase = await createClient();
-  const { id } = params;
+  const { id } = await params;
 
   const {
     data: { user },

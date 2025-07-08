@@ -3,9 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   const supabase = await createClient();
+  const { userId } = await params;
 
   const {
     data: { user },
@@ -27,7 +28,7 @@ export async function POST(
     good_thing: achievements,
     bad_thing: challenges,
     message: learnings,
-    user_id: params.userId,
+    user_id: userId,
     report_date: new Date().toISOString(), // report_dateをISO文字列で設定
   };
 
