@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import TasksTable from "@/components/tasks/tasks-table";
 import { PlusCircle, ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { dummyTasks } from "@/lib/dummy-data";
+import { Task } from "@/lib/definitions";
 
 export async function TaskContent({ userId }: { userId: string }) {
   const supabase = await createClient();
@@ -16,7 +16,8 @@ export async function TaskContent({ userId }: { userId: string }) {
     .single();
 
   // TODO: Fetch tasks for this user
-  const tasks = dummyTasks;
+  // const tasks = dummyTasks;
+  const tasks: Task[] = [];
 
   return (
     <div className="space-y-6">

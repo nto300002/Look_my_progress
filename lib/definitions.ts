@@ -20,14 +20,23 @@ export type Profile = {
   updated_at: string;
 };
 
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: "task_manager" | "commenter";
+}
+
 export type DailyReport = {
   id: string;
   user_id: string;
+  title: string;
+  mood: "良い" | "普通" | "悪い" | "smile" | "normal" | "sad"; // `face` カラムに対応
+  achievements: string; // `good_thing` カラムに対応
+  challenges: string; // `bad_thing` カラムに対応
+  learnings: string; // `message` カラムに対応
+  next_day_goals: string; // 将来的な拡張用
   report_date: string;
-  mood: "良い" | "普通" | "悪い";
-  achievements: string | null;
-  challenges: string | null;
-  learnings: string | null;
-  next_day_goals: string | null;
   created_at: string;
+  updated_at: string;
 };

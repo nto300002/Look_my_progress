@@ -1,6 +1,23 @@
-import { Task, DailyReport } from "./definitions";
+import { DailyReport, User, Task } from "./definitions";
 
-export const dummyTasks: Task[] = [
+// Users Data
+export const users: User[] = [
+  {
+    id: "user-1",
+    name: "yasuda naoto",
+    email: "user1@example.com",
+    role: "task_manager",
+  },
+  {
+    id: "user-2",
+    name: "Jane Smith",
+    email: "user2@example.com",
+    role: "commenter",
+  },
+];
+
+// Tasks Data
+export const tasks: Task[] = [
   {
     id: "task-1",
     title: "タスク1：共通レイアウトの実装",
@@ -69,60 +86,21 @@ export const dummyTasks: Task[] = [
   },
 ];
 
-export const dummyReports: DailyReport[] = [
-  {
-    id: "report-1",
-    user_id: "user-1",
-    report_date: "2024-07-20",
-    mood: "良い",
-    achievements: "日報一覧ページの実装を完了した。",
-    challenges: "TypeScriptの型エラーで少し詰まった。",
-    learnings: "shadcn/uiのTableコンポーネントの使い方がわかった。",
-    next_day_goals: "日報の詳細ページを作成する。",
-    created_at: "2024-07-20T18:00:00Z",
-  },
-  {
-    id: "report-2",
-    user_id: "user-1",
-    report_date: "2024-07-19",
-    mood: "普通",
-    achievements: "ログイン機能のリファクタリング。",
-    challenges: "リダイレクトの仕様を理解するのに時間がかかった。",
-    learnings: "Next.jsのMiddlewareの動作について学んだ。",
-    next_day_goals: "日報一覧ページに着手する。",
-    created_at: "2024-07-19T19:30:00Z",
-  },
-  {
-    id: "report-3",
-    user_id: "user-2",
-    report_date: "2024-07-20",
-    mood: "悪い",
-    achievements: "環境構築で1日が終わってしまった。",
-    challenges: "Node.jsのバージョン問題。",
-    learnings: "nvmを使ったバージョン管理の重要性を再認識した。",
-    next_day_goals: "今日こそはコーディングを始める。",
-    created_at: "2024-07-20T20:00:00Z",
-  },
-];
-
-export const getAllTasks = async (): Promise<Task[]> => {
-  // In a real application, you would fetch this data from a database.
-  // For now, we're returning the dummy data.
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(dummyTasks);
-    }, 500); // Simulate network latency
-  });
+// ダミーデータ取得用の関数
+export const getUsers = async (): Promise<User[]> => {
+  return new Promise((resolve) => setTimeout(() => resolve(users), 500));
 };
 
 export const getDailyReportsByUserId = async (
   userId: string
 ): Promise<DailyReport[]> => {
-  // For now, we're returning dummy data filtered by userId.
-  const reports = dummyReports.filter((report) => report.user_id === userId);
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(reports);
-    }, 300); // Simulate network latency
-  });
+  console.log("Fetching daily reports for user:", userId, "from dummy data.");
+  // This function will be replaced with a real DB access later.
+  // For now, it returns an empty array until Supabase connection is complete.
+  return new Promise((resolve) => setTimeout(() => resolve([]), 500));
+};
+
+export const getTasks = async (): Promise<Task[]> => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return tasks;
 };

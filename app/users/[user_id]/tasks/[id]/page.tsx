@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { dummyTasks } from "@/lib/dummy-data";
+import { getTasks } from "@/lib/dummy-data";
+import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
@@ -20,10 +21,11 @@ export default async function TaskDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const task = dummyTasks.find((task) => task.id === id);
+  const tasks = await getTasks();
+  const task = tasks.find((task) => task.id === id);
 
   if (!task) {
-    return <div>タスクが見つかりません</div>;
+    notFound();
   }
 
   return (
