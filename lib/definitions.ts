@@ -1,13 +1,14 @@
 export type Task = {
   id: string;
+  user_id: string;
   title: string;
-  status: "todo" | "in-progress" | "done";
-  priority: "低" | "中" | "高";
-  progress: number;
-  startDate: string | null;
-  dueDate: string | null;
-  createdAt: string;
-  description: string | null;
+  detail: string | null;
+  priority: "big" | "medium" | "small";
+  deadline: string | null;
+  status: "todo" | "done";
+  created_at: string;
+  updated_at: string;
+  // description, progress, startDateなどは新しいスキーマにないため削除
 };
 
 export type UserRole = "task_manager" | "commenter";
