@@ -1,6 +1,11 @@
 import TaskForm from "@/components/tasks/task-form";
 
-export default function NewTaskPage() {
+export default async function NewTaskPage({
+  params,
+}: {
+  params: Promise<{ user_id: string }>;
+}) {
+  const { user_id } = await params;
   return (
     <div className="space-y-6">
       <div>
@@ -9,7 +14,7 @@ export default function NewTaskPage() {
           新しいタスクの詳細を入力してください。
         </p>
       </div>
-      <TaskForm />
+      <TaskForm userId={user_id} />
     </div>
   );
 }

@@ -72,7 +72,7 @@ export async function ReportContent({ userId }: { userId: string }) {
             <h1 className="text-3xl font-bold">Daily Reports</h1>
           </div>
         </div>
-        {authUserRole === "task_manager" && (
+        {authUserRole === "task_manager" && authUser?.id === userId && (
           <Button asChild>
             <Link href={`/users/${userId}/daily_reports/new`}>
               <PlusCircle className="mr-2 h-4 w-4" />
