@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { cookies } from "next/headers";
 
 export async function GET(
   request: NextRequest,
   { params: paramsPromise }: { params: Promise<{ userId: string }> }
 ) {
   const params = await paramsPromise;
+  console.log("[GET] received params:", params);
   const supabase = await createClient();
 
   const { data: tasks, error } = await supabase.from("tasks").select("*");
@@ -23,6 +23,7 @@ export async function POST(
   { params: paramsPromise }: { params: Promise<{ userId: string }> }
 ) {
   const params = await paramsPromise;
+  console.log("[POST] received params:", params);
   const supabase = await createClient();
 
   const {

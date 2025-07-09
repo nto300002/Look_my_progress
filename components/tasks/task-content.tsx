@@ -14,6 +14,7 @@ export async function TaskContent({
   userId: string;
   tasks: Task[];
 }) {
+  console.log("[TaskContent] received params:", { userId, initialTasks });
   const supabase = await createClient();
 
   const { data: profile } = await supabase
