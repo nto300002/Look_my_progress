@@ -4,9 +4,16 @@ import { Input } from "@/components/ui/input";
 import TasksTable from "@/components/tasks/tasks-table";
 import { PlusCircle, ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
+import { getTasksByUserId } from "@/lib/data/tasks";
 import { Task } from "@/lib/definitions";
 
-export async function TaskContent({ userId }: { userId: string }) {
+export async function TaskContent({
+  userId,
+  tasks: initialTasks,
+}: {
+  userId: string;
+  tasks: Task[];
+}) {
   const supabase = await createClient();
 
   const { data: profile } = await supabase
@@ -15,9 +22,11 @@ export async function TaskContent({ userId }: { userId: string }) {
     .eq("id", userId)
     .single();
 
-  // TODO: Fetch tasks for this user
-  // const tasks = dummyTasks;
-  const tasks: Task[] = [];
+  const {
+    data: { user: authUser },
+  } = await supabase.auth.getUser();
+
+  const tasks = await getTasksByUserId(userId);
 
   return (
     <div className="space-y-6">
@@ -39,15 +48,17 @@ export async function TaskContent({ userId }: { userId: string }) {
         <div className="w-1/3">
           <Input placeholder="タスクを検索..." />
         </div>
-        <Link href={`/users/${userId}/tasks/new`}>
-          <Button>
-            <PlusCircle className="mr-2 h-4 w-4" />
-            新規作成
-          </Button>
-        </Link>
+        {authUser?.id === userId && (
+          <Link href={`/users/${userId}/tasks/new`}>
+            <Button>
+              <PlusCircle className="mr-2 h-4 w-4" />
+              新規作成
+            </Button>
+          </Link>
+        )}
       </div>
 
-      <TasksTable tasks={tasks} />
+      <TasksTable tasks={tasks} userId={userId} authUser={authUser} />
     </div>
   );
 }
