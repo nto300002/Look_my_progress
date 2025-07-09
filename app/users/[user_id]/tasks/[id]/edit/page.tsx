@@ -1,15 +1,16 @@
-import { getTasks } from "@/lib/dummy-data";
+import { getTaskById } from "@/lib/data/tasks";
 import TaskForm from "@/components/tasks/task-form";
 import { notFound } from "next/navigation";
+import { Task } from "@/lib/definitions";
 
 export default async function EditTaskPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string; user_id: string }>;
 }) {
-  const { id } = await params;
-  const tasks = await getTasks();
-  const task = tasks.find((task) => task.id === id);
+  const { id, user_id } = await params;
+  console.log("[EditTaskPage] received params:", { id, user_id });
+  const task = await getTaskById(id);
 
   if (!task) {
     notFound();
@@ -21,7 +22,7 @@ export default async function EditTaskPage({
         <h1 className="text-2xl font-bold">タスク編集</h1>
         <p className="text-muted-foreground">タスクの内容を編集します。</p>
       </div>
-      <TaskForm task={task} />
+      <TaskForm task={task} userId={user_id} />
     </div>
   );
 }
