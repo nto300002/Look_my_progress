@@ -14,7 +14,9 @@ export default async function TopPage() {
   return (
     <div>
       {isLoggedIn ? (
-        <UserList />
+        <div className="p-6">
+          <UserList />
+        </div>
       ) : (
         <>
           <HeroSection isLoggedIn={isLoggedIn} />
