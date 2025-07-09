@@ -68,7 +68,7 @@ export default function Header() {
                 <Link href={`/users/${user.id}/tasks`} passHref>
                   <Button variant="ghost">Myタスク一覧</Button>
                 </Link>
-                <Link href={`/users/${user.id}/schedule`} passHref>
+                <Link href={`/users/${user.id}/tasks/schedule`} passHref>
                   <Button variant="ghost">Myスケジュール</Button>
                 </Link>
                 <Button onClick={handleLogout} variant="ghost">
@@ -91,17 +91,16 @@ export default function Header() {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
                       <Link href={`/users/${user.id}/daily_reports`}>
-                        日報一覧
+                        My日報一覧
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href={`/users/${user.id}/tasks`}>タスク一覧</Link>
+                      <Link href={`/users/${user.id}/tasks`}>Myタスク一覧</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/users/schedule">スケジュール</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/retrospectives">振り返り</Link>
+                      <Link href={`/users/${user.id}/tasks/schedule`}>
+                        Myスケジュール
+                      </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>

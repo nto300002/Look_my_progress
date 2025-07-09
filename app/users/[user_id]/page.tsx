@@ -40,7 +40,7 @@ export default async function UserDetailPage({
       icon: ListChecks,
     },
     {
-      href: `/users/${user_id}/schedule`,
+      href: `/users/${user_id}/tasks/schedule`,
       label: "スケジュール",
       description: "チーム共通のスケジュールを確認します",
       icon: Calendar,
