@@ -10,7 +10,7 @@ export default async function TasksPage({
   const { user_id } = await params;
   return (
     <Suspense fallback={<Loading />}>
-      <TaskContent userId={user_id} tasks={[]} />
+      <TaskContent userId={user_id} />
     </Suspense>
   );
 }

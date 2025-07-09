@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { getTaskById } from "@/lib/data/tasks";
-import { createClient } from "@/lib/supabase/server";
 
 const priorityMap: {
   [key: string]: { label: string; className: string };
@@ -26,11 +24,6 @@ export default async function TaskDetailPage({
   if (!task) {
     notFound();
   }
-
-  const supabase = await createClient();
-  const {
-    data: { user: authUser },
-  } = await supabase.auth.getUser();
 
   return (
     <div className="space-y-6">
@@ -63,14 +56,6 @@ export default async function TaskDetailPage({
             </span>
           </div>
         </div>
-        {authUser?.id === task.user_id && (
-          <div className="flex gap-2">
-            <Button variant="outline" asChild>
-              <Link href={`/users/${user_id}/tasks/${task.id}/edit`}>編集</Link>
-            </Button>
-            <Button variant="destructive">削除</Button>
-          </div>
-        )}
       </div>
 
       {task.detail && (

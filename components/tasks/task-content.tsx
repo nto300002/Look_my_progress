@@ -5,16 +5,8 @@ import TasksTable from "@/components/tasks/tasks-table";
 import { PlusCircle, ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getTasksByUserId } from "@/lib/data/tasks";
-import { Task } from "@/lib/definitions";
 
-export async function TaskContent({
-  userId,
-  tasks: initialTasks,
-}: {
-  userId: string;
-  tasks: Task[];
-}) {
-  console.log("[TaskContent] received params:", { userId, initialTasks });
+export async function TaskContent({ userId }: { userId: string }) {
   const supabase = await createClient();
 
   const { data: profile } = await supabase
