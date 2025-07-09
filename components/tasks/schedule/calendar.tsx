@@ -18,17 +18,18 @@ export default function Calendar({ tasks }: CalendarProps) {
   const [groupedTasks, setGroupedTasks] = useState<GroupedTasks>({});
 
   useEffect(() => {
-    // 1. dueDateが存在するタスクのみをフィルタリング
-    const tasksWithDueDate = tasks.filter((task) => task.dueDate);
+    // 1. deadlineが存在するタスクのみをフィルタリング
+    const tasksWithdeadline = tasks.filter((task) => task.deadline);
 
-    // 2. dueDateで昇順にソート
-    const sortedTasks = tasksWithDueDate.sort(
-      (a, b) => new Date(a.dueDate!).getTime() - new Date(b.dueDate!).getTime()
+    // 2. deadlineで昇順にソート
+    const sortedTasks = tasksWithdeadline.sort(
+      (a, b) =>
+        new Date(a.deadline!).getTime() - new Date(b.deadline!).getTime()
     );
 
     // 3. 日付ごとにグループ化
     const groups = sortedTasks.reduce((acc, task) => {
-      const date = task.dueDate!; // nullはフィルタリング済み
+      const date = task.deadline!; // nullはフィルタリング済み
       if (!acc[date]) {
         acc[date] = [];
       }
@@ -65,7 +66,7 @@ export default function Calendar({ tasks }: CalendarProps) {
                       className={`p-2 rounded-md text-white cursor-pointer ${
                         task.status === "done"
                           ? "bg-green-500 hover:bg-green-600"
-                          : task.status === "in-progress"
+                          : task.status === "todo"
                           ? "bg-blue-500 hover:bg-blue-600"
                           : "bg-gray-400 hover:bg-gray-500"
                       }`}
