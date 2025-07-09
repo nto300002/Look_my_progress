@@ -9,7 +9,10 @@ export async function GET(
   console.log("[GET] received params:", params);
   const supabase = await createClient();
 
-  const { data: tasks, error } = await supabase.from("tasks").select("*");
+  const { data: tasks, error } = await supabase
+    .from("tasks")
+    .select("*")
+    .eq("user_id", params.userId);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
