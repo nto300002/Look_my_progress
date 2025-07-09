@@ -6,12 +6,12 @@ import { Task } from "@/lib/definitions";
 export default async function TasksPage({
   params,
 }: {
-  params: Promise<{ user_id: string; tasks: Task[] }>;
+  params: Promise<{ user_id: string }>;
 }) {
-  const { user_id, tasks } = await params;
+  const { user_id } = await params;
   return (
     <Suspense fallback={<Loading />}>
-      <TaskContent userId={user_id} tasks={tasks} />
+      <TaskContent userId={user_id} tasks={[]} />
     </Suspense>
   );
 }
