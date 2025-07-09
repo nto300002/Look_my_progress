@@ -1,7 +1,6 @@
 import { getTaskById } from "@/lib/data/tasks";
 import TaskForm from "@/components/tasks/task-form";
 import { notFound } from "next/navigation";
-import { Task } from "@/lib/definitions";
 
 export default async function EditTaskPage({
   params,
