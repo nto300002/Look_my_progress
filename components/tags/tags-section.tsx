@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Tag } from "@/lib/definitions";
 import { TagList } from "./tag-list";
 import { TagEditor } from "./tag-editor";

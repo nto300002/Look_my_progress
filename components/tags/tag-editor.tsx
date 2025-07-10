@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Tag } from "@/lib/definitions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,7 +23,7 @@ export function TagEditor({ taskId, userId, onTagsChange }: TagEditorProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   // 現在のタグを取得
-  const fetchCurrentTags = async () => {
+  const fetchCurrentTags = useCallback(async () => {
     try {
       const response = await fetch(`/api/users/${userId}/tasks/${taskId}/tags`);
       if (!response.ok) throw new Error("Failed to fetch tags");
@@ -34,10 +34,10 @@ export function TagEditor({ taskId, userId, onTagsChange }: TagEditorProps) {
       console.error("Error fetching tags:", error);
       toast.error("タグの取得に失敗しました");
     }
-  };
+  }, [userId, taskId, onTagsChange]); // ← toast を依存配列から除外
 
   // 全てのタグを取得
-  const fetchAllTags = async () => {
+  const fetchAllTags = useCallback(async () => {
     try {
       const response = await fetch(`/api/users/${userId}/tags`);
       if (!response.ok) throw new Error("Failed to fetch all tags");
@@ -46,12 +46,12 @@ export function TagEditor({ taskId, userId, onTagsChange }: TagEditorProps) {
     } catch (error) {
       console.error("Error fetching all tags:", error);
     }
-  };
+  }, [userId]);
 
   useEffect(() => {
     fetchCurrentTags();
     fetchAllTags();
-  }, [taskId, userId]);
+  }, [fetchCurrentTags, fetchAllTags]);
 
   // 新しいタグを作成して追加
   const handleCreateAndAddTag = async () => {
