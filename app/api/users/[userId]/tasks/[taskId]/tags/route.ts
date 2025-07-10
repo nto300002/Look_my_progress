@@ -5,7 +5,7 @@ import {
   addTagToTask,
   removeTagFromTask
 } from "@/lib/data/taskTags";
-import { getAllTags, createTag } from "@/lib/data/tags";
+import { createTag } from "@/lib/data/tags";
 
 // タスクに紐づくタグ一覧を取得
 export async function GET(
