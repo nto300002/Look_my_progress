@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Task, TaskWithTags } from "@/lib/definitions";
+import { TaskWithTags } from "@/lib/definitions";
 import { User } from "@supabase/supabase-js";
 import { TagList } from "@/components/tags/tag-list";
 import {
