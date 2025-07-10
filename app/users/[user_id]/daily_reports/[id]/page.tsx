@@ -13,6 +13,7 @@ import {
 import { ArrowLeft } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { CommentsSection } from "@/components/comments/comments-section";
 
 const moodMap: { [key: string]: { label: string; className: string } } = {
   smile: { label: "😊 良い", className: "bg-green-100 text-green-800" },
@@ -91,6 +92,10 @@ export default async function DailyReportDetailPage({
           </div>
         </CardContent>
       </Card>
+
+      <div className="mt-8">
+        <CommentsSection dailyReportId={id} userId={user_id} />
+      </div>
     </div>
   );
 }
