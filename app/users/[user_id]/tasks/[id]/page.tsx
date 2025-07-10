@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
 import { getTaskById } from "@/lib/data/tasks";
+import { getTagsByTaskId } from "@/lib/data/taskTags";
+import { TagsSection } from "@/components/tags/tags-section";
+import { createClient } from "@/lib/supabase/server";
 
 const priorityMap: {
   [key: string]: { label: string; className: string };
@@ -24,6 +27,14 @@ export default async function TaskDetailPage({
   if (!task) {
     notFound();
   }
+
+  // 現在のユーザーを取得
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const isOwner = user?.id === user_id;
+
+  // タグを取得
+  const tags = await getTagsByTaskId(id);
 
   return (
     <div className="space-y-6">
@@ -66,6 +77,14 @@ export default async function TaskDetailPage({
           </p>
         </div>
       )}
+
+      {/* タグセクション */}
+      <TagsSection
+        taskId={id}
+        userId={user_id}
+        isOwner={isOwner}
+        initialTags={tags}
+      />
     </div>
   );
 }
