@@ -56,3 +56,23 @@ export type CommentWithProfile = Comment & {
     name: string | null;
   };
 };
+
+export type Tag = {
+  id: string;
+  name: string;
+  user_id: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type TaskTag = {
+  id: string;
+  task_id: string;
+  tag_id: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type TaskWithTags = Task & {
+  tags?: Tag[];
+};
