@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Task } from "@/lib/definitions";
+import { Task, TaskWithTags } from "@/lib/definitions";
 import { User } from "@supabase/supabase-js";
+import { TagList } from "@/components/tags/tag-list";
 import {
   Table,
   TableBody,
@@ -36,12 +37,12 @@ export default function TasksTable({
   userId,
   authUser,
 }: {
-  tasks: Task[];
+  tasks: TaskWithTags[];
   userId: string;
   authUser: User | null;
 }) {
   console.log("[TasksTable] received userId:", userId);
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [tasks, setTasks] = useState<TaskWithTags[]>(initialTasks);
 
   if (!userId) {
     return null; // or a loading indicator
@@ -100,6 +101,7 @@ export default function TasksTable({
           <TableRow>
             <TableHead className="w-[50px]"></TableHead>
             <TableHead>タスク名</TableHead>
+            <TableHead>タグ</TableHead>
             <TableHead>詳細</TableHead>
             <TableHead className="w-[100px]">優先度</TableHead>
             <TableHead className="w-[150px]">期限日</TableHead>
@@ -124,6 +126,9 @@ export default function TasksTable({
                 <Link href={`/users/${userId}/tasks/${task.id}`}>
                   {task.title}
                 </Link>
+              </TableCell>
+              <TableCell>
+                <TagList tags={task.tags || []} />
               </TableCell>
               <TableCell>
                 {task.detail?.substring(0, 30)}

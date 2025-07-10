@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import TasksTable from "@/components/tasks/tasks-table";
 import { PlusCircle, ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { getTasksByUserId } from "@/lib/data/tasks";
+import { getTasksWithTagsByUserId } from "@/lib/data/tasks";
 
 export async function TaskContent({ userId }: { userId: string }) {
   const supabase = await createClient();
@@ -19,7 +19,7 @@ export async function TaskContent({ userId }: { userId: string }) {
     data: { user: authUser },
   } = await supabase.auth.getUser();
 
-  const tasks = await getTasksByUserId(userId);
+  const tasks = await getTasksWithTagsByUserId(userId);
 
   return (
     <div className="space-y-6">
