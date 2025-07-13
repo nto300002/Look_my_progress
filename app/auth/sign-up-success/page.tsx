@@ -20,8 +20,9 @@ export default function Page() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                You&apos;ve successfully signed up. Please check your email to
-                confirm your account before signing in.
+                サインアップが完了しました。メールを確認してアカウントを有効化してください。<br />
+              　メールアドレスのリンクをクリック後、ログインが可能になります。<br />
+              　もしメールが届かない場合は、迷惑メールフォルダを確認してください。<br />
               </p>
             </CardContent>
           </Card>
