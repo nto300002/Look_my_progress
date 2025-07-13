@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import TasksTable from "@/components/tasks/tasks-table";
+import { TasksDisplay } from "@/components/tasks/tasks-display";
 import { PlusCircle, ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getTasksWithTagsByUserId } from "@/lib/data/tasks";
@@ -51,7 +51,12 @@ export async function TaskContent({ userId }: { userId: string }) {
         )}
       </div>
 
-      <TasksTable tasks={tasks} userId={userId} authUser={authUser} />
+      <TasksDisplay 
+        tasks={tasks} 
+        userId={userId} 
+        authUser={authUser} 
+        profileName={profile?.name}
+      />
     </div>
   );
 }
