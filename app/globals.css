@@ -66,3 +66,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Masonry layout styles */
+.masonry-grid {
+  display: flex;
+  margin-left: -16px; /* gap column */
+  width: auto;
+}
+
+.masonry-grid-column {
+  padding-left: 16px; /* gap column */
+  background-clip: padding-box;
+}
+
+.masonry-grid-column > div {
+  margin-bottom: 16px; /* gap row */
+}

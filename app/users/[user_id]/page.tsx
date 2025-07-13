@@ -7,7 +7,7 @@ import { UpdateRoleForm } from "@/components/users/update-role-form";
 export default async function UserDetailPage({
   params,
 }: {
-  params: Promise<{ user_id: string }>;
+  params: Promise<{ user_id: string, community_id: string }>;
 }) {
   const { user_id } = await params;
   const supabase = await createClient();

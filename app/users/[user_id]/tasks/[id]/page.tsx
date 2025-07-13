@@ -6,6 +6,7 @@ import { getTaskById } from "@/lib/data/tasks";
 import { getTagsByTaskId } from "@/lib/data/taskTags";
 import { TagsSection } from "@/components/tags/tags-section";
 import { createClient } from "@/lib/supabase/server";
+import { Markdown } from "@/components/ui/markdown";
 
 const priorityMap: {
   [key: string]: { label: string; className: string };
@@ -65,16 +66,14 @@ export default async function TaskDetailPage({
                 {task.status}
               </Badge>
             </span>
-          </div>
+          </div>  
         </div>
       </div>
 
       {task.detail && (
         <div className="max-w-none rounded-md border p-4">
-          <h2 className="text-lg font-semibold mb-2">詳細</h2>
-          <p className="text-muted-foreground whitespace-pre-wrap">
-            {task.detail}
-          </p>
+          <h2 className="text-lg font-semibold mb-4">詳細</h2>
+          <Markdown>{task.detail}</Markdown>
         </div>
       )}
 
