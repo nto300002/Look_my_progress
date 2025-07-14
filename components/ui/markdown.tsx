@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeExternalLinks from 'rehype-external-links';
 import { cn } from '@/lib/utils';
 
 interface MarkdownProps {
@@ -12,6 +13,9 @@ export function Markdown({ children, className }: MarkdownProps) {
     <div className={cn('prose prose-sm max-w-none dark:prose-invert', className)}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
+        rehypePlugins={[
+          [rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }]
+        ]}
         components={{
           h1: ({ children }) => (
             <h1 className="text-2xl font-bold mt-6 mb-4 text-foreground">
@@ -95,12 +99,12 @@ export function Markdown({ children, className }: MarkdownProps) {
             </blockquote>
           ),
           hr: () => <hr className="my-6 border-border" />,
-          a: ({ href, children }) => (
+          a: ({ href, children, target, rel }) => (
             <a
               href={href}
               className="text-primary underline underline-offset-4 hover:text-primary/80"
-              target="_blank"
-              rel="noopener noreferrer"
+              target={target}
+              rel={rel}
             >
               {children}
             </a>

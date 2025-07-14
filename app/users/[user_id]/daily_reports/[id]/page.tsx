@@ -13,6 +13,7 @@ import {
 import { ArrowLeft } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import rehypeExternalLinks from "rehype-external-links";
 import { CommentsSection } from "@/components/comments/comments-section";
 
 const moodMap: { [key: string]: { label: string; className: string } } = {
@@ -37,7 +38,14 @@ export default async function DailyReportDetailPage({
     if (!text) return <p className="text-muted-foreground">記載なし</p>;
     return (
       <div className="prose prose-sm dark:prose-invert max-w-none">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
+        <ReactMarkdown 
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[
+            [rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }]
+          ]}
+        >
+          {text}
+        </ReactMarkdown>
       </div>
     );
   };
