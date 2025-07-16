@@ -6,9 +6,10 @@ import { cn } from '@/lib/utils';
 interface MarkdownProps {
   children: string;
   className?: string;
+  disableLinks?: boolean;
 }
 
-export function Markdown({ children, className }: MarkdownProps) {
+export function Markdown({ children, className, disableLinks }: MarkdownProps) {
   return (
     <div className={cn('prose prose-sm max-w-none dark:prose-invert', className)}>
       <ReactMarkdown
@@ -99,16 +100,21 @@ export function Markdown({ children, className }: MarkdownProps) {
             </blockquote>
           ),
           hr: () => <hr className="my-6 border-border" />,
-          a: ({ href, children, target, rel }) => (
-            <a
-              href={href}
-              className="text-primary underline underline-offset-4 hover:text-primary/80"
-              target={target}
-              rel={rel}
-            >
-              {children}
-            </a>
-          ),
+          a: ({ href, children, target, rel }) => 
+            disableLinks ? (
+              <span className="text-primary underline underline-offset-4">
+                {children}
+              </span>
+            ) : (
+              <a
+                href={href}
+                className="text-primary underline underline-offset-4 hover:text-primary/80"
+                target={target}
+                rel={rel}
+              >
+                {children}
+              </a>
+            ),
           table: ({ children }) => (
             <div className="mb-4 overflow-x-auto">
               <table className="min-w-full border-collapse border border-border">
