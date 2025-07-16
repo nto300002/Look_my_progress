@@ -26,6 +26,12 @@ export function TagEditor({ taskId, userId, onTagsChange }: TagEditorProps) {
   const fetchCurrentTags = useCallback(async () => {
     try {
       const response = await fetch(`/api/users/${userId}/tasks/${taskId}/tags`);
+      if (response.status === 404) {
+        // タスクが削除された場合は空のタグリストを設定
+        setCurrentTags([]);
+        onTagsChange?.([]);
+        return;
+      }
       if (!response.ok) throw new Error("Failed to fetch tags");
       const tags = await response.json();
       setCurrentTags(tags);
@@ -70,6 +76,10 @@ export function TagEditor({ taskId, userId, onTagsChange }: TagEditorProps) {
         body: JSON.stringify({ tagName: newTagName.trim() }),
       });
 
+      if (response.status === 404) {
+        toast.error("タスクが見つかりません");
+        return;
+      }
       if (!response.ok) throw new Error("Failed to create tag");
 
       setNewTagName("");
@@ -96,6 +106,10 @@ export function TagEditor({ taskId, userId, onTagsChange }: TagEditorProps) {
         body: JSON.stringify({ tagId }),
       });
 
+      if (response.status === 404) {
+        toast.error("タスクが見つかりません");
+        return;
+      }
       if (!response.ok) throw new Error("Failed to add tag");
 
       await fetchCurrentTags();
@@ -120,6 +134,10 @@ export function TagEditor({ taskId, userId, onTagsChange }: TagEditorProps) {
         body: JSON.stringify({ tagId }),
       });
 
+      if (response.status === 404) {
+        toast.error("タスクが見つかりません");
+        return;
+      }
       if (!response.ok) throw new Error("Failed to remove tag");
 
       await fetchCurrentTags();

@@ -10,11 +10,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Edit } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeExternalLinks from "rehype-external-links";
 import { CommentsSection } from "@/components/comments/comments-section";
+import { createClient } from "@/lib/supabase/server";
+import { DeleteReportButton } from "@/components/daily-reports/delete-report-button";
 
 const moodMap: { [key: string]: { label: string; className: string } } = {
   smile: { label: "😊 良い", className: "bg-green-100 text-green-800" },
@@ -33,6 +35,11 @@ export default async function DailyReportDetailPage({
   if (!report) {
     notFound();
   }
+
+  // 現在のユーザーを取得
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const isOwner = user?.id === user_id;
 
   const renderMarkdown = (text: string | null) => {
     if (!text) return <p className="text-muted-foreground">記載なし</p>;
@@ -63,21 +70,36 @@ export default async function DailyReportDetailPage({
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-3xl">{report.title}</CardTitle>
-          <CardDescription className="flex items-center gap-4 pt-2">
-            <span>
-              日付: {new Date(report.report_date).toLocaleDateString()}
-            </span>
-            <span>
-              気分:{" "}
-              <Badge
-                variant="outline"
-                className={moodMap[report.mood]?.className}
-              >
-                {moodMap[report.mood]?.label ?? report.mood}
-              </Badge>
-            </span>
-          </CardDescription>
+          <div className="flex justify-between items-start">
+            <div>
+              <CardTitle className="text-3xl">{report.title}</CardTitle>
+              <CardDescription className="flex items-center gap-4 pt-2">
+                <span>
+                  日付: {new Date(report.report_date).toLocaleDateString()}
+                </span>
+                <span>
+                  気分:{" "}
+                  <Badge
+                    variant="outline"
+                    className={moodMap[report.mood]?.className}
+                  >
+                    {moodMap[report.mood]?.label ?? report.mood}
+                  </Badge>
+                </span>
+              </CardDescription>
+            </div>
+            {isOwner && (
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" asChild>
+                  <Link href={`/users/${user_id}/daily_reports/${id}/edit`}>
+                    <Edit className="mr-2 h-4 w-4" />
+                    編集
+                  </Link>
+                </Button>
+                <DeleteReportButton userId={user_id} reportId={id} />
+              </div>
+            )}
+          </div>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-2">

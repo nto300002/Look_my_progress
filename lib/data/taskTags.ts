@@ -6,6 +6,19 @@ import { unstable_noStore as noStore } from "next/cache";
 export const getTagsByTaskId = async (taskId: string): Promise<Tag[]> => {
   noStore();
   const supabase = await createClient();
+  
+  // まずタスクの存在を確認
+  const { data: taskExists } = await supabase
+    .from("tasks")
+    .select("id")
+    .eq("id", taskId)
+    .single();
+
+  // タスクが存在しない場合は空配列を返す
+  if (!taskExists) {
+    return [];
+  }
+
   const { data, error } = await supabase
     .from("task_tags")
     .select(`
@@ -24,11 +37,11 @@ export const getTagsByTaskId = async (taskId: string): Promise<Tag[]> => {
     throw new Error("Failed to fetch tags.");
   }
 
-return (
-  data
-    ?.flatMap(item => item.tags || [])
-  || []
-);
+  return (
+    data
+      ?.flatMap(item => item.tags || [])
+    || []
+  );
 };
 
 // タスクにタグを追加

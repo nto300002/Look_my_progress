@@ -106,7 +106,7 @@ export function TaskCard({ task, userId, profileName }: TaskCardProps) {
             <div>
               <h4 className="font-medium text-muted-foreground mb-1">詳細</h4>
               <div className="text-sm text-muted-foreground line-clamp-4 overflow-hidden">
-                <Markdown className="prose-sm">{task.detail}</Markdown>
+                <Markdown className="prose-sm" disableLinks={true}>{task.detail}</Markdown>
               </div>
             </div>
           )}
