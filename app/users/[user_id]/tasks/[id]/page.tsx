@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, Edit } from "lucide-react";
 import { getTaskById } from "@/lib/data/tasks";
 import { getTagsByTaskId } from "@/lib/data/taskTags";
 import { TagsSection } from "@/components/tags/tags-section";
 import { createClient } from "@/lib/supabase/server";
 import { Markdown } from "@/components/ui/markdown";
+import { DeleteTaskButton } from "@/components/tasks/delete-task-button";
 
 const priorityMap: {
   [key: string]: { label: string; className: string };
@@ -68,6 +70,17 @@ export default async function TaskDetailPage({
             </span>
           </div>  
         </div>
+        {isOwner && (
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" asChild>
+              <Link href={`/users/${user_id}/tasks/${id}/edit`}>
+                <Edit className="mr-2 h-4 w-4" />
+                編集
+              </Link>
+            </Button>
+            <DeleteTaskButton userId={user_id} taskId={id} />
+          </div>
+        )}
       </div>
 
       {task.detail && (
